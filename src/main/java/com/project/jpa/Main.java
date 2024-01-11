@@ -1,4 +1,4 @@
-package com.project;
+package com.project.jpa;
 
 import java.io.File;
 import java.util.Collection;
@@ -8,7 +8,7 @@ import java.util.Set;
 public class Main {
 
    public static void main(String[] args) {
-      Manager.createSessionFactory();
+      Manager.createSessionFactory("/jpa/hibernate.cfg.xml", "hibernate.properties");
 
       Ciutat ciu0 = Manager.addCiutat("Vancouver", "Canada", 98661);
       Ciutat ciu1 = Manager.addCiutat("Växjö", "Suècia", 35220);

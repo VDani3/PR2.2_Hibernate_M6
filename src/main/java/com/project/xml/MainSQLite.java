@@ -1,4 +1,4 @@
-package com.project;
+package com.project.xml;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

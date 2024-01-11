@@ -3,7 +3,7 @@
 <hibernate-configuration>
    <session-factory>
       <!-- List of XML mapping files -->
-      <mapping resource = "Ciutat.hbm.xml"/>
-      <mapping resource = "Ciutada.hbm.xml"/>
+      <mapping class = "com.project.jpa.Ciutat"/>
+      <mapping class = "com.project.jpa.Ciutada"/>
    </session-factory>
 </hibernate-configuration>

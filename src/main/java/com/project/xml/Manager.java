@@ -1,8 +1,10 @@
-package com.project;
+package com.project.xml;
 
+import java.io.FileInputStream;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
 
 import org.hibernate.HibernateException;
@@ -18,19 +20,27 @@ public class Manager {
 
     private static SessionFactory factory; 
     
-    public static void createSessionFactory() {
+    public static void createSessionFactory(String configFileName, String propertiesFileName) {
+    try {
+        Configuration configuration = new Configuration();
 
-        try {
-            Configuration configuration = new Configuration();
-            configuration.configure();
-            StandardServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(
+        // Load settings from the custom Hibernate config file
+        configuration.configure(configFileName);
+
+        // Load additional properties from a custom properties file
+        Properties properties = new Properties();
+        System.out.println(System.getProperty("user.dir"));
+        properties.load(new FileInputStream(System.getProperty("user.dir")+ "/src/main/resources/" +propertiesFileName));
+        configuration.addProperties(properties);
+
+        StandardServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(
             configuration.getProperties()).build();
-            factory = configuration.buildSessionFactory(serviceRegistry);
-        } catch (Throwable ex) { 
-            System.err.println("Failed to create sessionFactory object." + ex);
-            throw new ExceptionInInitializerError(ex); 
-        }
+        factory = configuration.buildSessionFactory(serviceRegistry);
+    } catch (Throwable ex) {
+        System.err.println("Failed to create sessionFactory object." + ex);
+        throw new ExceptionInInitializerError(ex);
     }
+}
 
     public static void close () {
         factory.close();
